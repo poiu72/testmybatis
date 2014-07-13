@@ -1,106 +1,195 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="sy.dao.UserMapper" >
-  <resultMap id="BaseResultMap" type="sy.model.User" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="userName" property="username" jdbcType="VARCHAR" />
-    <result column="passWord" property="password" jdbcType="VARCHAR" />
-    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
-    <result column="lastUpdate" property="lastupdate" jdbcType="TIMESTAMP" />
-    <result column="status" property="status" jdbcType="INTEGER" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, userName, passWord, createTime, lastUpdate, status
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    from t_app_user
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from t_app_user
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="sy.model.User" >
-    insert into t_app_user (id, userName, passWord, 
-      createTime, lastUpdate, status
-      )
-    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{createtime,jdbcType=TIMESTAMP}, #{lastupdate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
-      )
-  </insert>
-  <insert id="insertSelective" parameterType="sy.model.User" >
-    insert into t_app_user
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="username != null" >
-        userName,
-      </if>
-      <if test="password != null" >
-        passWord,
-      </if>
-      <if test="createtime != null" >
-        createTime,
-      </if>
-      <if test="lastupdate != null" >
-        lastUpdate,
-      </if>
-      <if test="status != null" >
-        status,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="username != null" >
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="createtime != null" >
-        #{createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastupdate != null" >
-        #{lastupdate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="sy.model.User" >
-    update t_app_user
-    <set >
-      <if test="username != null" >
-        userName = #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null" >
-        passWord = #{password,jdbcType=VARCHAR},
-      </if>
-      <if test="createtime != null" >
-        createTime = #{createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastupdate != null" >
-        lastUpdate = #{lastupdate,jdbcType=TIMESTAMP},
-      </if>
-      <if test="status != null" >
-        status = #{status,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="sy.model.User" >
-    update t_app_user
-    set userName = #{username,jdbcType=VARCHAR},
-      passWord = #{password,jdbcType=VARCHAR},
-      createTime = #{createtime,jdbcType=TIMESTAMP},
-      lastUpdate = #{lastupdate,jdbcType=TIMESTAMP},
-      status = #{status,jdbcType=INTEGER}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
+<mapper namespace="sy.dao.UserMapper">
+	<resultMap id="BaseResultMap" type="sy.model.User">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="userName" property="username" jdbcType="VARCHAR" />
+		<result column="passWord" property="password" jdbcType="VARCHAR" />
+		<result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+		<result column="lastUpdate" property="lastupdate" jdbcType="TIMESTAMP" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, userName, passWord, createTime, lastUpdate, status
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from t_app_user
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		t_app_user
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="sy.model.User">
+		insert into t_app_user (id,
+		userName, passWord,
+		createTime, lastUpdate, status
+		)
+		values
+		(#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{createtime,jdbcType=TIMESTAMP},
+		#{lastupdate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="sy.model.User">
+		insert into t_app_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="username != null">
+				userName,
+			</if>
+			<if test="password != null">
+				passWord,
+			</if>
+			<if test="createtime != null">
+				createTime,
+			</if>
+			<if test="lastupdate != null">
+				lastUpdate,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="username != null">
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastupdate != null">
+				#{lastupdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="sy.model.User">
+		update t_app_user
+		<set>
+			<if test="username != null">
+				userName = #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				passWord = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="createtime != null">
+				createTime = #{createtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastupdate != null">
+				lastUpdate = #{lastupdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="sy.model.User">
+		update t_app_user
+		set userName = #{username,jdbcType=VARCHAR},
+		passWord =
+		#{password,jdbcType=VARCHAR},
+		createTime =
+		#{createtime,jdbcType=TIMESTAMP},
+		lastUpdate =
+		#{lastupdate,jdbcType=TIMESTAMP},
+		status = #{status,jdbcType=INTEGER}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<select id="selectUserRole" parameterType="java.lang.String"
+		resultType="sy.model.User">
+		SELECT
+		t_app_user_role.id,
+		t_app_user_role.userId,
+		t_app_user_role.roleId
+		FROM
+		t_app_user_role where
+		t_app_user_role.userId=#{id,jdbcType=VARCHAR}
+	</select>
+	<resultMap type="sy.model.User" id="userResultMap" extends="BaseResultMap">
+		<collection property="userroles" column="id" javaType="list"
+			select="selectUserRole" />
+	</resultMap>
+	<select id="getAll" resultMap="userResultMap">
+		select id, userName, passWord,
+		createTime, lastUpdate, status from t_app_user
+	</select>
+
+	<resultMap type="sy.model.User" id="userResultMap2" extends="BaseResultMap">
+		<collection property="userroles" javaType="list"
+			ofType="sy.model.UserRole">
+			<id property="id" column="userrole_id" />
+			<result column="roleid" property="roleId" />
+			<result property="userid" column="user_id" />
+		</collection>
+	</resultMap>
+	<select id="getAll2" resultMap="userResultMap2">
+		SELECT
+		t_app_user.id,
+		t_app_user.userName,
+		t_app_user.`passWord`,
+		t_app_user.createTime,
+		t_app_user.lastUpdate,
+		t_app_user.`status`,
+		t_app_user_role.id
+		userrole_id,
+		t_app_user_role.userId user_id,
+		t_app_user_role.roleId
+		role_id
+		FROM
+		t_app_user
+		INNER JOIN t_app_user_role ON t_app_user.id =
+		t_app_user_role.userId
+	</select>
+	<resultMap type="sy.model.User" id="userResultMap3" extends="BaseResultMap">
+		<collection property="userroles" javaType="list"
+			ofType="sy.model.UserRole">
+			<id property="id" column="userrole_id" />
+			<result column="roleid" property="roleId" />
+			<result property="userid" column="user_id" />
+
+			<association property="role" javaType="sy.model.Role">
+				<id property="id" column="role_id" />
+				<result property="rolename" column="role_text" />
+			</association>
+		</collection>
+	</resultMap>
+	<select id="getAll3" resultMap="userResultMap3">
+		SELECT
+		t_app_user.id,
+		t_app_user.userName,
+		t_app_user.createTime,
+		t_app_user.lastUpdate,
+		t_app_user.`status`,
+		t_app_user.`passWord`,
+		t_app_user_role.id userrole_id,
+		t_app_user_role.userId user_id,
+		t_app_user_role.roleId role_id,
+		t_app_role.id role_id,
+		t_app_role.roleName role_text,
+		t_app_role.createTime role_createtime,
+		t_app_role.lastUpdate role_lastUpdate,
+		t_app_role.`status` role_status
+		FROM
+		t_app_user
+		INNER JOIN t_app_user_role ON t_app_user.id = t_app_user_role.userId
+		INNER JOIN t_app_role ON t_app_user_role.roleId = t_app_role.id
+
+	</select>
 </mapper>

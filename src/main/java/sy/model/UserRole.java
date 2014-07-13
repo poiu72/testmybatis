@@ -1,13 +1,25 @@
 package sy.model;
 
 public class UserRole {
+	
+	private Role role;
+	
     private Integer id;
 
     private Integer userid;
 
     private Integer roleid;
 
-    public Integer getId() {
+    
+    public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	public Integer getId() {
         return id;
     }
 

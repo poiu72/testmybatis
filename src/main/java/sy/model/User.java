@@ -1,8 +1,12 @@
 package sy.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class User {
+	
+	private List<UserRole> userroles;
+	
     private Integer id;
 
     private String username;
@@ -62,4 +66,13 @@ public class User {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+	public List<UserRole> getUserroles() {
+		return userroles;
+	}
+
+	public void setUserroles(List<UserRole> userroles) {
+		this.userroles = userroles;
+	}
+    
 }
