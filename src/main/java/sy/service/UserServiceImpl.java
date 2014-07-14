@@ -39,5 +39,10 @@ public class UserServiceImpl implements UserServiceI{
 		// TODO Auto-generated method stub
 		return userMapper.getAll3();
 	}
+	@Override
+	public List<User> getAll4() {
+		// TODO Auto-generated method stub
+		return userMapper.getAll4();
+	}
 
 }

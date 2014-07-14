@@ -5,6 +5,8 @@ import java.util.List;
 
 public class User {
 	
+	private List<Role> roles;
+	
 	private List<UserRole> userroles;
 	
     private Integer id;
@@ -74,5 +76,14 @@ public class User {
 	public void setUserroles(List<UserRole> userroles) {
 		this.userroles = userroles;
 	}
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+	
     
 }

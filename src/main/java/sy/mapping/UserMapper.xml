@@ -178,18 +178,55 @@
 		t_app_user.lastUpdate,
 		t_app_user.`status`,
 		t_app_user.`passWord`,
-		t_app_user_role.id userrole_id,
+		t_app_user_role.id
+		userrole_id,
 		t_app_user_role.userId user_id,
-		t_app_user_role.roleId role_id,
+		t_app_user_role.roleId
+		role_id,
 		t_app_role.id role_id,
 		t_app_role.roleName role_text,
 		t_app_role.createTime role_createtime,
-		t_app_role.lastUpdate role_lastUpdate,
+		t_app_role.lastUpdate
+		role_lastUpdate,
 		t_app_role.`status` role_status
 		FROM
 		t_app_user
-		INNER JOIN t_app_user_role ON t_app_user.id = t_app_user_role.userId
-		INNER JOIN t_app_role ON t_app_user_role.roleId = t_app_role.id
+		INNER
+		JOIN t_app_user_role ON t_app_user.id = t_app_user_role.userId
+		INNER
+		JOIN t_app_role ON t_app_user_role.roleId = t_app_role.id
+
+	</select>
+	<resultMap type="sy.model.User" id="userResultMap4" extends="BaseResultMap">
+		<collection property="roles" javaType="list"
+			ofType="sy.model.Role">
+				<id property="id" column="role_id" />
+				<result property="rolename" column="role_text" />
+		</collection>
+	</resultMap>
+	<select id="getAll4" resultMap="userResultMap4">
+		SELECT
+		t_app_user.id,
+		t_app_user.userName,
+		t_app_user.createTime,
+		t_app_user.lastUpdate,
+		t_app_user.`status`,
+		t_app_user.`passWord`,
+		t_app_user_role.id,
+		t_app_user_role.userId,
+		t_app_user_role.roleId,
+		t_app_role.id role_id,
+		t_app_role.roleName role_text,
+		t_app_role.createTime,
+		t_app_role.lastUpdate
+		role_lastUpdate,
+		t_app_role.`status`
+		FROM
+		t_app_user
+		INNER
+		JOIN t_app_user_role ON t_app_user.id = t_app_user_role.userId
+		INNER
+		JOIN t_app_role ON t_app_user_role.roleId = t_app_role.id
 
 	</select>
 </mapper>

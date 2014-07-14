@@ -21,4 +21,5 @@ public interface UserMapper {
 	List<User> getAll2();
 
 	List<User> getAll3();
+	List<User> getAll4();
 }

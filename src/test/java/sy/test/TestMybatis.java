@@ -54,4 +54,9 @@ public class TestMybatis{
 		List<User> l = userService.getAll3();
 		logger.info(JSON.toJSONStringWithDateFormat(l, "yyyy-MM-dd HH:mm:ss"));
 	}
+	@Test
+	public void test5() {
+		List<User> l = userService.getAll4();
+		logger.info(JSON.toJSONStringWithDateFormat(l, "yyyy-MM-dd HH:mm:ss"));
+	}
 }
