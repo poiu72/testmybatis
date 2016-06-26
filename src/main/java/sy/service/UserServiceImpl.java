@@ -9,12 +9,13 @@ import sy.dao.UserMapper;
 import sy.model.User;
 @Service("userService")
 public class UserServiceImpl implements UserServiceI{
+	@Autowired
 	private UserMapper userMapper;
 	
 	public UserMapper getUserMapper() {
 		return userMapper;
 	}
-	@Autowired
+//	@Autowired
 	public void setUserMapper(UserMapper userMapper) {
 		this.userMapper = userMapper;
 	}
@@ -22,6 +23,7 @@ public class UserServiceImpl implements UserServiceI{
 	@Override
 	public User getUserById(String id) {
 		// TODO Auto-generated method stub
+		System.out.println("getUserById start---");
 		return userMapper.selectByPrimaryKey(Integer.parseInt(id));
 	}
 	@Override

@@ -2,6 +2,7 @@ package sy.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import sy.model.User;
 
 public interface UserMapper {
@@ -16,7 +17,7 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
-    
+    User findUserByName(String name);
     List<User> getAll();
 	List<User> getAll2();
 

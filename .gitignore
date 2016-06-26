@@ -11,3 +11,4 @@ nb-configuration.xml
 debug.log.*
 info.log.*
 error.log.*
+mybatis.log*

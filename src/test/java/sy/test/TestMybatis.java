@@ -1,7 +1,14 @@
 package sy.test;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +20,7 @@ import sy.model.User;
 import sy.service.UserServiceI;
 
 import com.alibaba.fastjson.JSON;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:spring.xml","classpath:spring-mybatis.xml"})
 public class TestMybatis{
@@ -58,5 +66,43 @@ public class TestMybatis{
 	public void test5() {
 		List<User> l = userService.getAll4();
 		logger.info(JSON.toJSONStringWithDateFormat(l, "yyyy-MM-dd HH:mm:ss"));
+	}
+	@Test
+	public void selectByPrimaryKeyJK() throws IOException {
+		String resource="SqlMapConfig.xml";
+		InputStream InputStream= Resources.getResourceAsStream(resource);
+		SqlSessionFactory SqlSessionFactory=new SqlSessionFactoryBuilder().build(InputStream);
+		SqlSession SqlSession= SqlSessionFactory.openSession();
+		User user = SqlSession.selectOne("sy.dao.UserMapper.selectByPrimaryKey", "1");
+		System.out.println(user.getUsername());
+		SqlSession.close();
+	}
+	@Test
+	public void findUserByNameTest() throws IOException {
+		String resource="SqlMapConfig.xml";
+		InputStream InputStream= Resources.getResourceAsStream(resource);
+		SqlSessionFactory SqlSessionFactory=new SqlSessionFactoryBuilder().build(InputStream);
+		SqlSession SqlSession= SqlSessionFactory.openSession();
+		List<User> list = SqlSession.selectList("sy.dao.UserMapper.findUserByName", "test");
+		System.out.println(list.get(0).toString()+"------------------"+list.size());
+		SqlSession.close();
+	}
+	@Test
+	public void insertSelectiveTest() throws IOException {
+		String resource="SqlMapConfig.xml";
+		InputStream InputStream= Resources.getResourceAsStream(resource);
+		SqlSessionFactory SqlSessionFactory=new SqlSessionFactoryBuilder().build(InputStream);
+		SqlSession SqlSession= SqlSessionFactory.openSession();
+		Date date1=new Date();
+		Date date2=new Date();
+		User user=new User();
+		user.setUsername("笨蛋");
+		user.setPassword("123");
+		user.setCreatetime(date1);
+		user.setLastupdate(date2);
+		user.setStatus(1);
+		System.out.println(SqlSession.insert("sy.dao.UserMapper.insertSelective", user));
+		SqlSession.commit();
+		SqlSession.close();
 	}
 }
