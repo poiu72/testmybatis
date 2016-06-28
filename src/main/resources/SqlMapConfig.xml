@@ -2,20 +2,44 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
      <configuration>
+
+    <properties resource="config.properties">
+            <!--properties还可以配置一些属性名和属性值-->
+            <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
+    </properties>
+    <!--<settings>
+        <setting name="" value=""/>
+    </settings>-->
+    <!--定义单个别名
+   type:类型路径
+   alias：别名
+   -->
+    <!--<typeAliases>
+        &lt;!&ndash;<typeAlias type="sy.model.User" alias="user"></typeAlias>&ndash;&gt;
+        &lt;!&ndash;批量别名定义&ndash;&gt;
+        <package name="sy.model"></package>
+    </typeAliases>-->
+    <!--和spring整合后environments将废除-->
          <environments default="development">
              <environment id="development">
+                 <!--使用JDBC管理事务，事务由mybatis控制-->
                  <transactionManager type="JDBC" />
-                 <!-- 配置数据库连接信息 -->
+                 <!-- 配置数据库连接信息，由mybatis管理 -->
                <dataSource type="POOLED">
-                     <property name="driver" value="com.mysql.jdbc.Driver" />
-                     <property name="url" value="jdbc:mysql://localhost:3306/uracsdb" />
+                     <property name="driver" value="${driverClassName}" />
+                     <property name="url" value="${jdbc_url}" />
                    <!--jdbc:mysql://localhost:3306/uracsdb-->
-                    <property name="username" value="root" />
-                     <property name="password" value="root" />
+                    <property name="username" value="${jdbc_username}" />
+                     <property name="password" value="${jdbc_password}" />
                 </dataSource>
              </environment>
          </environments>
     <mappers>
-        <mapper resource="sy/mapping/UserMapper.xml"/>
+        <mapper resource="mybatis/mapping/OrdersMapperCustom.xml"/>
+        <!--使用mapper接口加载单个mapper.xml,mapper必须和mapper.xml在同目录并且同名
+        而且使用的是mapper代理方式-->
+        <!--<mapper class="sy.dao.UserMapper"/>
+        &lt;!&ndash;批量加载mapper&ndash;&gt;
+        <package name="sy.dao"/>-->
     </mappers>
      </configuration>

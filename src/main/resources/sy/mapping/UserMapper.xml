@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="sy.dao.UserMapper">
+	<!--查询出的列名和pojo的属性名不一致，定义resultMap对列名和pojo属性名做映射关系-->
 	<resultMap id="BaseResultMap" type="sy.model.User">
 		<id column="id" property="id" jdbcType="INTEGER" />
 		<result column="userName" property="username" jdbcType="VARCHAR" />
@@ -9,6 +10,24 @@
 		<result column="lastUpdate" property="lastupdate" jdbcType="TIMESTAMP" />
 		<result column="status" property="status" jdbcType="INTEGER" />
 	</resultMap>
+	<!--基于单表定义sql片段，提高重用性
+		不要有where-->
+	<sql id="findUserList">
+		<if test="userCustom.username!=null and userCustom.username!=''">
+			and userName like '%${userCustom.username}%'
+		</if>
+		<if test="userCustom.password!=null and userCustom.password !=''">
+			and password='${userCustom.password}'
+		</if>
+		<if test="idlist!=null and idlist!=''">
+			<!--<foreach collection="idlist" item="id" open="and 	(" close=")" separator="or">
+				id=#{id}
+			</foreach> -->
+			<foreach collection="idlist" item="id" open="and id in ( " close=")" separator=",">
+				#{id}
+			</foreach>
+		</if>
+	</sql>
 	<sql id="Base_Column_List">
 		id, userName, passWord, createTime, lastUpdate, status
 	</sql>
@@ -25,6 +44,25 @@
 		<include refid="Base_Column_List" />
 		from t_app_user
 		where userName like '%${value}%'
+	</select>
+	<select id="findUserList" resultType="sy.model.UserCustom"
+			parameterType="sy.model.UserQueryVo">
+		select
+		<include refid="Base_Column_List" />
+		from t_app_user
+		/*where自动去掉条件中第一个and*/
+		/*引用sql片段的id，如果refid指定的id不在本mapper文件中，需要前边加namespace*/
+		<where>
+			1=1
+			<include refid="findUserList"></include>
+		</where>
+	</select>
+	<select id="selectCount" resultType="int"
+			parameterType="sy.model.UserQueryVo">
+		select
+		count(*)
+		from t_app_user
+		where userName like '%${userCustom.username}%' and password='${userCustom.password}'
 	</select>
 	<!--'%${name}%'  CONCAT('%',#{name},'%' )-->
 	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
@@ -45,6 +83,23 @@
 		)
 	</insert>
 	<insert id="insertSelective" parameterType="sy.model.User">
+-- 		查找刚插入的主键值
+		<!--<selectKey keyProperty="id" order="AFTER" resultType="INTERER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>-->
+		<!--<selectKey keyProperty="id" order="BEFORE" resultType="java.lang.String">
+			SELECT 序列名.nextval()
+		</selectKey>
+		insert into t_app_user (id,
+		userName, passWord,
+		createTime, lastUpdate, status
+		)
+		values
+		(#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{createtime,jdbcType=TIMESTAMP},
+		#{lastupdate,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}
+		)-->
 		insert into t_app_user
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="id != null">

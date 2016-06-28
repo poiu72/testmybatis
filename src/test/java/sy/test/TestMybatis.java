@@ -2,6 +2,7 @@ package sy.test;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import sy.dao.UserMapper;
 import sy.model.User;
+import sy.model.UserCustom;
+import sy.model.UserQueryVo;
 import sy.service.UserServiceI;
 
 import com.alibaba.fastjson.JSON;
@@ -68,7 +72,7 @@ public class TestMybatis{
 		logger.info(JSON.toJSONStringWithDateFormat(l, "yyyy-MM-dd HH:mm:ss"));
 	}
 	@Test
-	public void selectByPrimaryKeyJK() throws IOException {
+	public void selectByPrimaryKey() throws IOException {
 		String resource="SqlMapConfig.xml";
 		InputStream InputStream= Resources.getResourceAsStream(resource);
 		SqlSessionFactory SqlSessionFactory=new SqlSessionFactoryBuilder().build(InputStream);
@@ -88,6 +92,44 @@ public class TestMybatis{
 		SqlSession.close();
 	}
 	@Test
+	public void findUserList() throws IOException {
+		String resource="SqlMapConfig.xml";
+		InputStream InputStream= Resources.getResourceAsStream(resource);
+		SqlSessionFactory SqlSessionFactory=new SqlSessionFactoryBuilder().build(InputStream);
+		SqlSession SqlSession= SqlSessionFactory.openSession();
+		UserCustom userCustom=new UserCustom();
+		UserQueryVo userQueryVo=new UserQueryVo();
+		List<Integer> list=new ArrayList<Integer>();
+		list.add(5);
+		list.add(6);
+		list.add(7);
+//		userCustom.setUsername("test");
+//		userCustom.setPassword("123");
+		userQueryVo.setUserCustom(userCustom);
+		userQueryVo.setIdlist(list);
+		UserMapper userMapper=SqlSession.getMapper(UserMapper.class);
+		List<UserCustom> list1 =userMapper.findUserList(userQueryVo);
+//		List<UserCustom> list = SqlSession.selectList("sy.dao.UserMapper.findUserList", userQueryVo);
+		System.out.println(list1.get(0).getUsername()+"------------------"+list.size());
+		SqlSession.close();
+	}
+	@Test
+	public void selectCount() throws IOException {
+		String resource="SqlMapConfig.xml";
+		InputStream InputStream= Resources.getResourceAsStream(resource);
+		SqlSessionFactory SqlSessionFactory=new SqlSessionFactoryBuilder().build(InputStream);
+		SqlSession SqlSession= SqlSessionFactory.openSession();
+		UserCustom userCustom=new UserCustom();
+		UserQueryVo userQueryVo=new UserQueryVo();
+		userCustom.setUsername("test");
+		userCustom.setPassword("123");
+		userQueryVo.setUserCustom(userCustom);
+		UserMapper userMapper=SqlSession.getMapper(UserMapper.class);
+		int count= userMapper.selectCount(userQueryVo);
+		System.out.println(count);
+		SqlSession.close();
+	}
+	@Test
 	public void insertSelectiveTest() throws IOException {
 		String resource="SqlMapConfig.xml";
 		InputStream InputStream= Resources.getResourceAsStream(resource);
@@ -102,6 +144,28 @@ public class TestMybatis{
 		user.setLastupdate(date2);
 		user.setStatus(1);
 		System.out.println(SqlSession.insert("sy.dao.UserMapper.insertSelective", user));
+		SqlSession.commit();
+		SqlSession.close();
+	}
+	@Test
+	public void deleteByPrimaryKey() throws IOException {
+		String resource="SqlMapConfig.xml";
+		InputStream InputStream= Resources.getResourceAsStream(resource);
+		SqlSessionFactory SqlSessionFactory=new SqlSessionFactoryBuilder().build(InputStream);
+		SqlSession SqlSession= SqlSessionFactory.openSession();
+		SqlSession.delete("sy.dao.UserMapper.deleteByPrimaryKey", "19");
+		SqlSession.commit();
+		SqlSession.close();
+	}
+	@Test
+	public void updateByPrimaryKeySelective() throws IOException {
+		String resource="SqlMapConfig.xml";
+		InputStream InputStream= Resources.getResourceAsStream(resource);
+		SqlSessionFactory SqlSessionFactory=new SqlSessionFactoryBuilder().build(InputStream);
+		SqlSession SqlSession= SqlSessionFactory.openSession();
+		User user = SqlSession.selectOne("sy.dao.UserMapper.selectByPrimaryKey", "2");
+		user.setUsername("dada");
+		SqlSession.selectOne("sy.dao.UserMapper.updateByPrimaryKeySelective", user);
 		SqlSession.commit();
 		SqlSession.close();
 	}
