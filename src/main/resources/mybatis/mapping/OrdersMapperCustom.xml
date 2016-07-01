@@ -14,4 +14,109 @@
 		where orders.user_id=user.id
 
 	</select>
+	<!--resultMap对查询结果有特殊要求，将关联查询映射到pojo属性或者list中，可以实现延迟加载-->
+	<resultMap id="resultMap" type="mybatis.model.Orders">
+		<id column="id" property="id"></id>
+		<result column="userId" property="userId"></result>
+		<result column="number" property="number"></result>
+		<result column="createtime" property="createtime"></result>
+		<result column="note" property="note"></result>
+
+		<association property="user" javaType="mybatis.model.User">
+			<id column="id" property="id"></id>
+			<result column="username" property="username"></result>
+			<result column="sex" property="sex"></result>
+			<result column="address" property="address"></result>
+		</association>
+	</resultMap>
+	<resultMap id="OrderOderdetailresultMap" type="mybatis.model.Orders" extends="resultMap">
+		<collection property="list" ofType="mybatis.model.Orderdail">
+			<id column="orderdetail_id" property="id"></id>
+			<result column="orderdetail_id" property="ordersId"></result>
+			<result column="items_id" property="itemsId"></result>
+			<result column="items_mum" property="itemsMum"></result>
+		</collection>
+	</resultMap>
+	<resultMap id="UserItemsresultMap" type="mybatis.model.User">
+		<id column="user_id" property="id"></id>
+		<result column="username" property="username"></result>
+		<result column="sex" property="sex"></result>
+		<result column="address" property="address"></result>
+		<collection property="orderslist" ofType="mybatis.model.Orders" >
+			<id column="id" property="id"></id>
+			<result column="userId" property="userId"></result>
+			<result column="number" property="number"></result>
+			<result column="createtime" property="createtime"></result>
+			<result column="note" property="note"></result>
+			<collection property="list" ofType="mybatis.model.Orderdail">
+				<id column="orderdetail_id" property="id"></id>
+				<result column="orderdetail_id" property="ordersId"></result>
+				<result column="items_id" property="itemsId"></result>
+				<result column="items_mum" property="itemsMum"></result>
+				<association property="items" javaType="mybatis.model.Items">
+					<id column="items_id" property="id"></id>
+					<result column="items_name" property="name"></result>
+					<result column="items_detail" property="detail"></result>
+					<result column="items_price" property="price"></result>
+				</association>
+			</collection>
+		</collection>
+	</resultMap>
+	<select id="findUserItemsresultMap"  resultMap="UserItemsresultMap">
+		select
+		orders.*,
+		user.id,
+		user.username,
+		user.sex,
+		user.address,
+		orderdetail.id orderdetail_id,
+		orderdetail.orders_id,
+		orderdetail.items_id,
+		orderdetail.items_mum,
+		items.name items_name,
+		items.detail items_detail,
+		items.price items_price
+		from
+		orders,
+		user,
+		orderdetail,
+		items
+		where orders.user_id=user.id  and orderdetail.orders_id=orders.id and orderdetail.items_id=items.id
+	</select>
+	<select id="findUserItemsresultMap2" resultType="mybatis.model.OrdersCustom">
+		select
+		orders.*,
+		user.id,
+		user.username,
+		user.sex,
+		user.address,
+		orderdetail.id ,
+		orderdetail.orders_id,
+		orderdetail.items_id,
+		orderdetail.items_mum,
+		items.name ,
+		items.detail ,
+		items.price
+		from
+		orders,
+		user,
+		orderdetail,
+		items
+		where orders.user_id=user.id  and orderdetail.orders_id=orders.id and orderdetail.items_id=items.id
+	</select>
+	<resultMap id="findUserOrderLazyresultMap" type="mybatis.model.Orders">
+		<id column="id" property="id"></id>
+		<result column="user_id" property="userId"></result>
+		<result column="number" property="number"></result>
+		<result column="createtime" property="createtime"></result>
+		<result column="note" property="note"></result>
+		<association property="user" javaType="mybatis.model.User" select="mybatis.dao.UserMapper.selectByPrimaryKey" column="user_id" >
+		</association>
+	</resultMap>
+	<select id="findUserOrderLazy" resultMap="findUserOrderLazyresultMap">
+		select  * from orders
+	</select>
+	<select id="findUserById" parameterType="int" resultType="mybatis.model.User">
+		select * from user where id=#{value}
+	</select>
 </mapper>

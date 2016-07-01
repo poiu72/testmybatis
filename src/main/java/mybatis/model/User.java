@@ -1,8 +1,11 @@
 package mybatis.model;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-public class User {
+public class User implements Serializable{
+    private List<Orders> orderslist;
     private Integer id;
 
     private String username;
@@ -12,6 +15,14 @@ public class User {
     private String sex;
 
     private String address;
+
+    public List<Orders> getOrderslist() {
+        return orderslist;
+    }
+
+    public void setOrderslist(List<Orders> orderslist) {
+        this.orderslist = orderslist;
+    }
 
     public Integer getId() {
         return id;
@@ -51,5 +62,16 @@ public class User {
 
     public void setAddress(String address) {
         this.address = address == null ? null : address.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", sex='" + sex + '\'' +
+                ", address='" + address + '\'' +
+                ", birthday=" + birthday +
+                '}';
     }
 }

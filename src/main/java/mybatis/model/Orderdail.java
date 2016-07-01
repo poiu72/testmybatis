@@ -1,6 +1,7 @@
 package mybatis.model;
 
-public class Orderdail {
+public class Orderdail extends Items{
+    private Items items;
     private Integer id;
 
     private Integer ordersId;
@@ -8,6 +9,14 @@ public class Orderdail {
     private Integer itemsId;
 
     private Integer itemsMum;
+
+    public Items getItems() {
+        return items;
+    }
+
+    public void setItems(Items items) {
+        this.items = items;
+    }
 
     public Integer getId() {
         return id;

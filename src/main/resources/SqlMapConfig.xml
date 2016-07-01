@@ -7,18 +7,20 @@
             <!--properties还可以配置一些属性名和属性值-->
             <property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
     </properties>
-    <!--<settings>
-        <setting name="" value=""/>
-    </settings>-->
+    <settings>
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
     <!--定义单个别名
    type:类型路径
    alias：别名
    -->
-    <!--<typeAliases>
-        &lt;!&ndash;<typeAlias type="sy.model.User" alias="user"></typeAlias>&ndash;&gt;
-        &lt;!&ndash;批量别名定义&ndash;&gt;
-        <package name="sy.model"></package>
-    </typeAliases>-->
+    <typeAliases>
+        <typeAlias type="mybatis.model.User" alias="user"></typeAlias>
+        <!--批量别名定义-->
+        <!--<package name="mybatis.model"></package>-->
+    </typeAliases>
     <!--和spring整合后environments将废除-->
          <environments default="development">
              <environment id="development">
@@ -36,6 +38,7 @@
          </environments>
     <mappers>
         <mapper resource="mybatis/mapping/OrdersMapperCustom.xml"/>
+        <mapper resource="mybatis/mapping/UserMapper.xml"/>
         <!--使用mapper接口加载单个mapper.xml,mapper必须和mapper.xml在同目录并且同名
         而且使用的是mapper代理方式-->
         <!--<mapper class="sy.dao.UserMapper"/>

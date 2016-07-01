@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mybatis.dao.ItemsMapperCustom" >
+  <sql id="query_item_where">
+    <if test="itemCustom!=null">
+      <if test="itemCustom.name!=null and itemCustom.name!=''">
+        name like '$%{itemCustom.name}%'
+      </if>
+    </if>
+  </sql>
+  <select id="findItemList" parameterType="mybatis.model.ItemsQueryVo" resultType="mybatis.model.ItemCustom">
+    select * from items
+    <where>
+      <include refid="query_item_where"/>
+    </where>
+  </select>
+</mapper>

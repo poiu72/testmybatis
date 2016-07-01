@@ -1,8 +1,11 @@
 package mybatis.model;
 
 import java.util.Date;
+import java.util.List;
 
-public class Orders {
+public class Orders extends Orderdail{
+    private User user;
+    private List<Orderdail>list;
     private Integer id;
 
     private Integer userId;
@@ -12,6 +15,22 @@ public class Orders {
     private Date createtime;
 
     private String note;
+
+    public List<Orderdail> getList() {
+        return list;
+    }
+
+    public void setList(List<Orderdail> list) {
+        this.list = list;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Integer getId() {
         return id;
