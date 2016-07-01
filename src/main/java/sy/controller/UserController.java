@@ -33,4 +33,5 @@ public class UserController {
 		requet.setAttribute("user", user);
 		return "showUser";
 	}
+
 }

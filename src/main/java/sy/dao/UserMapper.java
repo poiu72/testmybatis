@@ -2,7 +2,10 @@ package sy.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import sy.model.User;
+import sy.model.UserCustom;
+import sy.model.UserQueryVo;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);
@@ -16,10 +19,13 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
-    
+    User findUserByName(String name);
+    List<UserCustom> findUserList(UserQueryVo userQueryVo);
     List<User> getAll();
 	List<User> getAll2();
 
 	List<User> getAll3();
 	List<User> getAll4();
+
+    int selectCount( UserQueryVo userQueryVo);
 }

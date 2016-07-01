@@ -1,0 +1,14 @@
+/target/**
+/.git/*
+/.idea/*
+/logs/*
+*.iml
+/*/*.txt
+nb-configuration.xml
+.project
+.settings/*
+*.log
+debug.log.*
+info.log.*
+error.log.*
+mybatis.log*
