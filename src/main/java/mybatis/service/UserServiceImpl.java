@@ -17,8 +17,6 @@ import java.util.List;
 public class UserServiceImpl  implements UserServiceI{
     @Autowired
     private UserMapper userMapper;
-    @Autowired
-    private ItemsMapperCustom itemsMapperCustom;
 
     public UserMapper getUserMapper() {
         return userMapper;
@@ -33,8 +31,5 @@ public class UserServiceImpl  implements UserServiceI{
         System.out.println("getUserById start---");
         return userMapper.selectByPrimaryKey(Integer.parseInt(id));
     }
-    @Override
-    public List<ItemCustom> findItemList(ItemsQueryVo itemsQueryVo){
-        return  itemsMapperCustom.findItemList( itemsQueryVo);
-    }
+
 }

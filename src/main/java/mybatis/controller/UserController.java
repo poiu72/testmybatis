@@ -34,12 +34,5 @@ public class UserController {
 		requet.setAttribute("user", user);
 		return "items/showUser";
 	}
-	@RequestMapping("/queryItem")
-	public ModelAndView queryItem(){
-		List<ItemCustom> list = userService.findItemList(null);
-		ModelAndView modelAndView=new ModelAndView();
-		modelAndView.setViewName("items/itemList");
-		modelAndView.addObject("list", list);
-		return modelAndView;
-	}
+
 }
