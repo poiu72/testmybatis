@@ -1,11 +1,10 @@
 package sy.dao;
 
-import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
 import sy.model.User;
 import sy.model.UserCustom;
 import sy.model.UserQueryVo;
+
+import java.util.List;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Integer id);

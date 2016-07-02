@@ -1,8 +1,8 @@
 package sy.service;
 
-import java.util.List;
-
 import sy.model.User;
+
+import java.util.List;
 
 public interface UserServiceI {
 	public User getUserById(String id);

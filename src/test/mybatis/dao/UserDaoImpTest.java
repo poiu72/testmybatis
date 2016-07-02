@@ -2,11 +2,8 @@ package mybatis.dao;
 
 import junit.framework.TestCase;
 import mybatis.model.User;
-import org.junit.runner.RunWith;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 public class UserDaoImpTest extends TestCase {
     private ApplicationContext ac;

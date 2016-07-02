@@ -1,15 +1,19 @@
 package mybatis.service;
 
 
+<<<<<<< HEAD
 import mybatis.model.ItemsQueryVo ;
+=======
+import mybatis.dao.ItemsMapperCustom;
+>>>>>>> bf7c360f74bad252698b5bbc8c0b2949d2957048
 import mybatis.dao.UserMapper;
+import mybatis.model.ItemCustom;
+import mybatis.model.ItemsQueryVo;
 import mybatis.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import mybatis.model.ItemsQueryVo;
-import mybatis.model.ItemCustom ;
-import mybatis.model.Items;
-import java.util.*;
+
+import java.util.List;
 /**
  * Created by jiaranran on 2016/6/30.
  */
