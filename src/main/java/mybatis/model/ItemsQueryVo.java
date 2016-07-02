@@ -3,14 +3,11 @@ package mybatis.model;
 /**
  * Created by jiaranran on 2016/6/30.
  */
-<<<<<<< HEAD
 import mybatis.model.ItemsQueryVo;
 import mybatis.model.ItemCustom ;
 import mybatis.model.Items  ;
 
 import java.util.List;
-=======
->>>>>>> bf7c360f74bad252698b5bbc8c0b2949d2957048
 
 public class ItemsQueryVo {
     private ItemCustom itemCustom;

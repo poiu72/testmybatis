@@ -1,7 +1,5 @@
 package mybatis.model;
 
-import com.sun.javafx.beans.annotations.NonNull;
-
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
