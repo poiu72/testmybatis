@@ -7,5 +7,5 @@ import mybatis.model.Items;
 import java.util.*;
 public interface UserServiceI {
 	public User getUserById(String id);
-	public List<ItemCustom> findItemList(ItemsQueryVo itemsQueryVo);
+
 }

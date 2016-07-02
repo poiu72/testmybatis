@@ -35,7 +35,7 @@
         <td>${item.price}</td>
         <td><fmt:formatDate value="${item.createtime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
         <td>${item.detail}</td>
-        <td><a href="${pageContext.request.contextPath}/items/editItem.do?id=${item.id}" />修改</td>
+        <td><a href="${pageContext.request.contextPath}/itemController/editItem.do?id=${item.id}" />修改</td>
       </tr>
     </c:forEach>
   </table>
