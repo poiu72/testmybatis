@@ -1,6 +1,7 @@
 package mybatis.service;
 
 import mybatis.dao.ItemsMapper;
+
 import mybatis.dao.ItemsMapperCustom;
 import mybatis.model.ItemCustom;
 import mybatis.model.Items;
@@ -33,5 +34,8 @@ public class ItemServiceImpl implements ItemServiceI{
     public int updateByPrimaryKeySelective(Integer id,ItemCustom itemCustom) {
         itemCustom.setId(id);
         return itemsMapper.updateByPrimaryKeySelective(itemCustom);
+    }
+    public int deleteByPrimaryKeySelective(Integer id){
+        return itemsMapper.deleteByPrimaryKey(id);
     }
 }

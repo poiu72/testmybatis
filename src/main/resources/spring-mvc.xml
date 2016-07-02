@@ -18,6 +18,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 		</property>
 	</bean>
 
+
 	<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
 	<!--<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
 		<property name="messageConverters">
@@ -28,11 +29,30 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 	</bean>-->
 	<!--<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>-->
-	<mvc:annotation-driven conversion-service="conversionservice"></mvc:annotation-driven>
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver" />
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>classpath:CustomValidationMessages</value>
+			</list>
+		</property>
+		<property name="fileEncodings" value="utf-8	" />
+		<property name="cacheSeconds" value="120" />
+	</bean>
+
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
+		<!-- 这里配置将使用上面国际化配置的messageSource -->
+		<property name="validationMessageSource" ref="messageSource" />
+	</bean>
+	<!-- 注册验证器 -->
+	<mvc:annotation-driven conversion-service="conversionservice"
+						   validator="validator"></mvc:annotation-driven>
+
 	<bean id="conversionservice" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<property name="converters">
 			<list>
-				<bean class=""/>
+				<bean class="mybatis.controller.converter.CustomDateConverter"/>
 			</list>
 		</property>
 	</bean>

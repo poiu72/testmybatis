@@ -11,6 +11,7 @@ import java.util.List;
  */
 public interface ItemServiceI {
     ItemCustom selectByPrimaryKey(Integer id);
-    public List<ItemCustom> findItemList(ItemsQueryVo itemsQueryVo);
+    List<ItemCustom> findItemList(ItemsQueryVo itemsQueryVo);
     int updateByPrimaryKeySelective(Integer id,ItemCustom record);
+    int deleteByPrimaryKeySelective(Integer id);
 }
