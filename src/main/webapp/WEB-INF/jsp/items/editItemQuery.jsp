@@ -13,10 +13,8 @@
 <head>
     <title>查询商品列表</title>
   <script type="text/javascript">
-    function deleteItem(){
-      alert(1);
-      document.itemForm.action = "${pageContext.request.contextPath}/itemController/deleteItem.do";
-
+    function editQuerySubmit(){
+      document.itemForm.action = "${pageContext.request.contextPath}/itemController/editQuerySubmit.do";
       document.itemForm.submit();
     }
     function queryItem(){
@@ -32,7 +30,7 @@
     <tr>
       <td>商品名称：<input name="itemCustom.name"/></td>
       <td><input type="submit" value="查询" onclick="queryItem()"/>
-        <input type="submit" value="批量删除" onclick="deleteItem()"/>
+        <input type="submit" value="批量修改提交" onclick="editQuerySubmit()"/>
       </td>
     </tr>
   </table>
@@ -46,15 +44,14 @@
       <td>商品描述</td>
       <td>操作</td>
     </tr>
-    <c:forEach items="${list}" var="item">
+    <c:forEach items="${list}" var="item" varStatus="status">
 
       <tr>
         <td><input type="checkbox" name="item_id" value="${item.id}"/></td>
-        <td>${item.name}</td>
-        <td>${item.price}</td>
-        <td><fmt:formatDate value="${item.createtime}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-        <td>${item.detail}</td>
-        <td><a href="${pageContext.request.contextPath}/itemController/editItem.do?id=${item.id}" />修改</td>
+        <td><input  name="list[status.index].name" value="${item.name}"/></td>
+        <td><input  name="list[status.index].price" value="${item.price}"/></td>
+        <td><input  name="list[status.index].name" value="$<fmt:formatDate value="${item.createtime}" pattern="yyyy-MM-dd HH:mm:ss"/>"/></td>
+        <td><input  name="list[status.index].name" value="${item.detail}"/></td>
       </tr>
     </c:forEach>
   </table>

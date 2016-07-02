@@ -15,6 +15,12 @@
     <title>商品修改</title>
 </head>
 <body>
+<c:if test="${allErros!=null}">
+  <c:forEach items="${allErros}" var="error">
+    ${error.defaultMessage()}
+  </c:forEach>
+</c:if>
+
 <form id="itemForm" action="${pageContext.request.contextPath}/items/editItemSubmit.do" method="post" enctype="multipart/form-data">
   <input type="hidden" name="id" value="${itemCustom.id}"/>
   修改商品信息：
