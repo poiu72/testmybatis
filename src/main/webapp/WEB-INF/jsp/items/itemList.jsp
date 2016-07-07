@@ -16,7 +16,6 @@
     function deleteItem(){
       alert(1);
       document.itemForm.action = "${pageContext.request.contextPath}/itemController/deleteItem.do";
-
       document.itemForm.submit();
     }
     function queryItem(){
@@ -26,11 +25,20 @@
   </script>
 </head>
 <body>
+${username},生意兴隆
 <form name="itemForm" action="${pageContext.request.contextPath}/itemController/queryItem.do" method="post">
   查询条件：
   <table width="100%" border="1">
     <tr>
-      <td>商品名称：<input name="itemCustom.name"/></td>
+      <td>
+        商品名称：<input name="itemCustom.name"/>
+        商品类型：
+        <select name="itemType" >
+          <c:forEach items="${itemTypes}" var="itemType">
+            <option value="${itemType.key}" >${itemType.value}</option>
+          </c:forEach>
+        </select>
+      </td>
       <td><input type="submit" value="查询" onclick="queryItem()"/>
         <input type="submit" value="批量删除" onclick="deleteItem()"/>
       </td>

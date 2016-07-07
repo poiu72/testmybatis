@@ -1,12 +1,14 @@
 package mybatis.model;
 
+import mybatis.controller.validation.validGroup1;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
 public class Items {
     private Integer id;
-    @Size(min=1,max=30,message = "{items.name.length.error}")
+    @Size(min=1,max=30,message ="{items.name.length.error}",groups = {validGroup1.class})
     private String name;
 
     private Float price;
