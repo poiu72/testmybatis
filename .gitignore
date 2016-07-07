@@ -12,3 +12,4 @@ debug.log.*
 info.log.*
 error.log.*
 mybatis.log*
+classes/artifacts/testmybatis/testmybatis.jar
