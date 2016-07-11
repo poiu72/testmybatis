@@ -1,4 +1,4 @@
-create database uracsdb;
+-- create database uracsdb;
 
 SET FOREIGN_KEY_CHECKS=0;
 

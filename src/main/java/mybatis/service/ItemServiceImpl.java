@@ -44,13 +44,14 @@ public class ItemServiceImpl implements ItemServiceI{
         Items items=itemsMapper.selectByPrimaryKey(id);
         /*跟业务相关的异常最好在service层抛出*/
         if(items==null){
-            return new CustomException("修改的商品信息不存在");
+            new CustomException("修改的商品信息不存在");
         }
-        ItemCustom itemCustom=new ItemCustom();
+        ItemCustom itemCustom = null;
         if (items!=null){
+            itemCustom=new ItemCustom();
             BeanUtils.copyProperties(items,itemCustom);
-            return itemCustom;
         }
+        return itemCustom;
     }
     @Override
     public List<ItemCustom> findItemList(ItemsQueryVo itemsQueryVo){
