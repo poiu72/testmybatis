@@ -1,7 +1,9 @@
 package mybatis.dao;
 
 import mybatis.model.Items;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ItemsMapper {
     int deleteByPrimaryKey(Integer id);
 

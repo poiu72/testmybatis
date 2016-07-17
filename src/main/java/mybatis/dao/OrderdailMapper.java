@@ -1,7 +1,9 @@
 package mybatis.dao;
 
 import mybatis.model.Orderdail;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface OrderdailMapper {
     int deleteByPrimaryKey(Integer id);
 

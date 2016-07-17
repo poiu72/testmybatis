@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +30,8 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/itemController")
 public class ItemController {
-    @Autowired
+//    @Autowired
+    @Resource
     private ItemServiceI itemServiceI;
 
     @RequestMapping(value = "/queryItem",method ={RequestMethod.POST,RequestMethod.GET} )

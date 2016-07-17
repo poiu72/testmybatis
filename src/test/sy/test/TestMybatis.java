@@ -24,7 +24,7 @@ import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:spring.xml","classpath:spring-mybatis.xml"})
+@ContextConfiguration(locations = {"classpath:spring-common.xml","classpath:spring-mybatis.xml"})
 public class TestMybatis{
 	private static final Logger logger = Logger.getLogger(TestMybatis.class);
 	
@@ -41,7 +41,7 @@ public class TestMybatis{
 	
 //	@Before
 //	public void before(){
-//		ac = new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-mybatis.xml"});
+//		ac = new ClassPathXmlApplicationContext(new String[]{"spring-common.xml","spring-mybatis.xml"});
 //		userService = (UserServiceI)ac.getBean("userService");
 //	}
 	@Test

@@ -1,15 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context" xsi:schemaLocation="http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
-http://www.springframework.org/schema/context 
-http://www.springframework.org/schema/context/spring-context-3.0.xsd 
-http://www.springframework.org/schema/mvc 
-http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
-
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	   xmlns:repository="http://www.springframework.org/schema/data/repository"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+	http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
+	  http://www.springframework.org/schema/data/repository http://www.springframework.org/schema/data/repository/spring-repository-1.6.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
+	<!-- 表示JPA Repository所在的包 -->
+	<jpa:repositories base-package="mybatis.repository"/>
+	<jpa:auditing auditor-aware-ref="jpaAuditor"/>
+	<!--指明 controller 所在包，并扫描其中的注解-->
 	<!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
 	<context:component-scan base-package="mybatis.controller" />
+
 	<mvc:resources mapping="/js/" location="/js/**"/>
-	<mvc:resources mapping="/img/" location="/img/**"/>
+	<!--<mvc:resources mapping="/img/" location="/img/**"/>-->
 
 	<mvc:interceptors>
 		<mvc:interceptor>
@@ -51,7 +64,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
-				<value>classpath:CustomValidationMessages</value>
+				<value>CustomValidationMessages</value>
 			</list>
 		</property>
 		<property name="fileEncodings" value="utf-8	" />
@@ -64,19 +77,25 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 		<property name="validationMessageSource" ref="messageSource" />
 	</bean>
 	<!-- 注册验证器 -->
+	<!-- 开启注解 -->
 	<mvc:annotation-driven conversion-service="conversionservice"
 						   validator="validator"></mvc:annotation-driven>
 
 	<bean id="conversionservice" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 		<property name="converters">
-			<list>
+			<set>
 				<bean class="mybatis.controller.converter.CustomDateConverter"/>
-			</list>
+			</set>
 		</property>
 	</bean>
 	<!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 -->
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" />
-
+	<!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:prefix="/WEB-INF/jsp/" p:suffix=".jsp" />-->
+	<bean id="freeMarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="configuration" value="/WEB-INF/jsp/"/>
+	</bean>
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+		<property name="suffix" value=".ftl"/>
+	</bean>
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<property name="defaultEncoding">
 			<value>UTF-8</value>
@@ -89,4 +108,19 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 		</property>
 	</bean>
 
+	<!-- 链接到persistence.xml -->
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
+		<property name="persistenceUnitName" value="defaultPersistenceUnit"/>
+	</bean>
+	<!--<bean id="sessionFactory"
+		  class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="packagesToScan" value="mybatis.model"/>
+	</bean>-->
+	<!-- 事务管理 -->
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean>
+
+	<!-- 开启事务管理注解 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>
