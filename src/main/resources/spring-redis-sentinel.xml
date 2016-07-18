@@ -6,31 +6,41 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
 ">
 
     <bean id="redisSentinelConfiguration" class="org.springframework.data.redis.connection.RedisSentinelConfiguration">
-        <property name="master">
-            <bean class="org.springframework.data.redis.connection.RedisNode">
-                <property name="name" value="${redis.masterName}"></property>
-            </bean>
-        </property>
-
-        <property name="sentinels">
+        <constructor-arg name="master" value="${redis.masterName}" />
+        <constructor-arg name="sentinelHostAndPorts">
             <set>
-                <bean class="org.springframework.data.redis.connection.RedisNode">
-                    <constructor-arg name="host" value="${redis.ip1}"></constructor-arg>
-                    <constructor-arg name="port" value="${redis.port1}"></constructor-arg>
-                </bean>
-
-                <bean class="org.springframework.data.redis.connection.RedisNode">
-                    <constructor-arg name="host" value="${redis.ip2}"></constructor-arg>
-                    <constructor-arg name="port" value="${redis.port2}"></constructor-arg>
-                </bean>
-
-                <bean class="org.springframework.data.redis.connection.RedisNode">
-                    <constructor-arg name="host" value="${redis.ip3}"></constructor-arg>
-                    <constructor-arg name="port" value="${redis.port3}"></constructor-arg>
-                </bean>
-
+                <value>218.60.94.15:45239</value>
+                <value>218.60.94.15:45238</value>
+                <value>218.60.94.15:45035</value>
             </set>
-        </property>
+        </constructor-arg>
+
+        <!-- <property name="master">
+             <bean class="org.springframework.data.redis.connection.RedisNode">
+                 <property name="name" value="${redis.masterName}"></property>
+             </bean>
+         </property>
+
+         <property name="sentinels">
+             <set>
+                 <bean class="org.springframework.data.redis.connection.RedisNode">
+                     <constructor-arg name="host" value="${redis.ip1}"></constructor-arg>
+                     <constructor-arg name="port" value="${redis.port1}"></constructor-arg>
+                 </bean>
+
+                 <bean class="org.springframework.data.redis.connection.RedisNode">
+                     <constructor-arg name="host" value="${redis.ip2}"></constructor-arg>
+                     <constructor-arg name="port" value="${redis.port2}"></constructor-arg>
+                 </bean>
+
+                 <bean class="org.springframework.data.redis.connection.RedisNode">
+                     <constructor-arg name="host" value="${redis.ip3}"></constructor-arg>
+                     <constructor-arg name="port" value="${redis.port3}"></constructor-arg>
+                 </bean>
+
+             </set>
+         </property>-->
+
     </bean>
 
     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
