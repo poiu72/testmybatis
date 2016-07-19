@@ -9,9 +9,9 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <constructor-arg name="master" value="${redis.masterName}" />
         <constructor-arg name="sentinelHostAndPorts">
             <set>
-                <value>218.60.94.15:45239</value>
-                <value>218.60.94.15:45238</value>
-                <value>218.60.94.15:45035</value>
+                <value>218.60.94.15:5239</value>
+                <value>218.60.94.15:5238</value>
+                <value>218.60.94.15:5035</value>
             </set>
         </constructor-arg>
 
@@ -55,6 +55,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
         <constructor-arg name="sentinelConfig" ref="redisSentinelConfiguration"/>
         <constructor-arg name="poolConfig" ref="jedisPoolConfig" />
 
+        <!--<property name="password" value="${redis.password}"></property>-->
         <property name="timeout" value="${redis.timeout}"></property>
         <property name="usePool" value="${redis.usePool}"></property>
     </bean>
